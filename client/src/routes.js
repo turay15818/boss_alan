@@ -1,6 +1,7 @@
 /* eslint-disable prettier/prettier */
 import React from 'react'
 const Dashboard = React.lazy(() => import('./views/dashboard/Dashboard'))
+// const UpdateAdminLoginPassword = React.lazy(() => import('./views/dashboard/UpdateAdminLoginPassword'))
 const unixTimeStamp = React.lazy(() => import('./views/dashboard/unixTimeStamp'))
 const TableSearch = React.lazy(() => import('./views/dashboard/TableSearch'))
 const VendorInformation = React.lazy(() => import('./views/dashboard/VendorInformation'))
@@ -11,14 +12,20 @@ const UpdatePassword = React.lazy(() => import('./views/dashboard/UpdatePassword
 
 // const UserList = React.lazy(() => import('./views/base/tables/UserList'))
 
+
+
+
+
+
 const routes = [
   { path: '/', exact: true, name: 'Home' },
   { path: '/dashboard', name: 'Dashboard', element: Dashboard },
+  // { path: '/UpdateAdminLoginPassword/:token', name: 'Update Password', element: UpdateAdminLoginPassword },
   { path: '/unixTimeStamp', name: 'Unix Time Stamp', element: unixTimeStamp },
   { path: '/vendorInformation', name: 'Vendor Information', element: VendorInformation },
-  { path: '/stsToken', name: 'STS Token', element: STSToken },
-  { path: '/tableSearch', name: 'Table Search', element: TableSearch },
-  { path: '/tableRangeSearch', name: 'Table Range Search', element: TableRangeSearch },
+  { path: '/stsToken', name: 'Check STS Token', element: STSToken,},
+  { path: '/tableSearch', name: 'Ven-Shit Enquires', element: TableSearch },
+  { path: '/tableRangeSearch', name: 'Customer Enquiries', element: TableRangeSearch },
   { path: '/updatePassword', name: 'Dashboard', element: UpdatePassword },
   // { path: '/base/userList', name: 'User List', element: UserList },
   { path: '/resetPassword', name: 'Reset Password', element: ResetPassword },

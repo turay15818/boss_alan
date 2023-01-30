@@ -76,20 +76,12 @@ const Users = db.define('users', {
 
     resetPasswordToken: {
         type: DataTypes.STRING,
-        allowNull: true,
-        validate: {
-            notEmpty: false,
-        }
     },
     resetPasswordExpires: {
         type: DataTypes.STRING,
-        allowNull: true,
-        validate: {
-            notEmpty: false,
-        }
     },
 }, {
-    freezeTableName: true
+    // freezeTableName: true
 });
 
 export default Users;

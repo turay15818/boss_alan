@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { LoginUser, reset } from '../../../features/authSlice'
+import { Link } from "react-router-dom";
 import {
   CButton,
   CModal,
@@ -58,15 +59,20 @@ const Login = () => {
               <CModalTitle>Login Fail Due To</CModalTitle>
             </CModalHeader>
             <CModalBody>{message}</CModalBody>
+            <CModalBody>
+              <CButton color="warning" style={{ marginRight: "4px" }} id="editUsers">
+                <Link id="editUsers" style={{ textDecoration: "none", fontWeight: 700, color: 'white' }}
+                  to={`/resetPassword`}
+
+                >
+                  Forget Password     </Link>
+              </CButton>
+            </CModalBody>
           </CModal>
 
 
 
         </p>}
-
-
-
-
 
         <CRow className="justify-content-center">
           <CCol md={4}>

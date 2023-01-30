@@ -53,78 +53,63 @@ const DataTable = () => {
   }
 
 
+  const [firstSearch, setFirstSearch] = useState('');
+  const [secondSearch, setSecondSearch] = useState('');
+  const [result, setResult] = useState({});
+
+  useEffect(() => {
+    async function convert() {
+      const res = await fetch(`http://localhost:4433/convert?start=${firstSearch}&end=${secondSearch}`);
+      const data = await res.json();
+      setResult(data);
+    }
+
+    if (firstSearch && secondSearch) {
+      convert();
+    }
+  }, [firstSearch, secondSearch]);
 
 
 
   return (
     <div>
-
       <CContainer >
         <CRow className="justify-content-center">
           <CCol md={4}>
             <CCardGroup>
               <CCard className="p-4">
-                <CForm onSubmit={convertTimeStamp} className="box" style={{ width: "100%" }}>
-                  <h1 className="title is-2" style={{ textAlign: "center" }}>{date}</h1>
-                  <CFormInput
-                    required
-                    id="unixTimeStamp"
-                    className="input"
-                    value={unixTimestamp}
-                    onChange={(e) => setUnixTimestamp(e.target.value)}
-                    type="number"
-                    label="Input Unix Time"
-                    placeholder="1674563128"
+                <p5 className="title is-4" style={{ textAlign: "center" }}>Start Date: <span style={{ color: "#ff6600", fontWeight: 800 }}>{result.start}</span></p5>
+                <p5 className="title is-4" style={{ textAlign: "center" }}>End Date: {" "} {" "}<span style={{ color: "#ff6600", fontWeight: 800 }}>{result.end}</span></p5>
+                <CFormInput
+                  required
+                  id="unixTimeStamp"
+                  className="input"
+                  value={firstSearch}
+                  onChange={(e) => setFirstSearch(e.target.value)}
+                  type="dateTime-local"
+                  label="Start Date"
+                />
+                <CFormInput
+                  required
+                  id="unixTimeStamp"
+                  className="input"
+                  value={secondSearch}
+                  onChange={(e) => setSecondSearch(e.target.value)}
+                  type="dateTime-local"
+                  label="End Date"
+                />
 
-                  />
+                <hr />
 
-                  <hr />
-
-                  <div className="d-grid gap-2">
+                {/* <div className="d-grid gap-2">
                     <CButton id="login" style={{ backgroundColor: '#6610F2', border: 'solid 2px #6610F2' }} type="submit">Convert Time</CButton>
-                  </div>
-                </CForm>
+                  </div> */}
               </CCard>
             </CCardGroup>
           </CCol>
         </CRow>
       </CContainer>
 
-      <input 
-      // value={unixTimestamp}
-      // type="dateTime-local" 
-      onChange={e => setStartDate(e.target.value)} 
-      />
-      <input 
-      // value={unixTimestamp}
-      // type="datetime-local" 
-      onChange={e => setEndDate(e.target.value)} 
-      />
-      <button onClick={handleSearch} type="submit">Search</button>
-
-      <table className="table is-striped is-fullwidth" id="filteredData">
-        <thead>
-          <tr>
-            <th>Date</th>
-            <th>Name</th>
-            <th>Age</th>
-          </tr>
-        </thead>
-        <tbody>
-          {filteredData.map(filteredData => (
-            <tr key={filteredData.uuid}>
-              <td>{filteredData.name}</td>
-              <td>{filteredData.staffId}</td>
-              <td>{filteredData.email}</td>
-              <td>
-              {
-                new Date(filteredData.createdAt).toLocaleDateString() 
-              }
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
     </div>
   );
 }
