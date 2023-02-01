@@ -59,7 +59,7 @@ const _nav = [
   {
     component: CNavItem,
     name: 'Reset Password',
-    to: '/resetPassword',
+    to: '/resetPasswordDd',
     icon: <CIcon icon={cilLoopCircular} customClassName="nav-icon" />,
   },
 
@@ -67,6 +67,12 @@ const _nav = [
     component: CNavItem,
     name: 'Update Password',
     to: '/updatePassword',
+    icon: <CIcon icon={cilLayers} customClassName="nav-icon" />,
+  },
+  {
+    component: CNavItem,
+    name: 'Drop Down',
+    to: '/dropdown',
     icon: <CIcon icon={cilLayers} customClassName="nav-icon" />,
   },
 

@@ -87,53 +87,51 @@ const TableSearch = () => {
   }, [firstSearch]);
 
 
-
+  const [vendor, setVendor] = useState({});
+  useEffect(() => {
+    fetch("http://localhost:4433//venInfoVendor/1.0.1/")
+      .then((response) => response.json())
+      .then((json) => setVendor(json.data));
+  }, []);
 
 
   return (
     <div>
 
-      {/* <table>
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Timestamp</th>
-        </tr>
-      </thead>
-      <tbody>
-      {items.map((items, ) => (
-          <tr key={items.id}>
-            <td>{items.name}</td>
-            <td>{}</td>
-            <td>{formatDate(items.phoneNumber)}</td>
-          </tr>
-        ))}
-      </tbody>
-    </table> */}
 
 
-<CContainer >
+      <div>
+        <p>balance: {vendor.balance}</p>
+        <p>descVendor: {vendor.descVendor}</p>
+        <p>idVendor: {vendor.idVendor}</p>
+      </div>
+
+
+
+
+
+      <CContainer >
         <CRow className="justify-content-center">
           <CCol md={4}>
             <CCardGroup>
               <CCard className="p-4">
-               
-                  <h1 className="title is-2" style={{ textAlign: "center" }}>{result.start}</h1>
-                  <CFormInput
-                    required
-                    id="unixTimeStamp"
-                    className="input"
-                    value={firstSearch}
-                    onChange={(e) => setFirstSearch(e.target.value)}
-                    type="dateTime-local"
-                    label="Input Unix Time"
-                    // placeholder="1674563128"
 
-                  />
+                <h1 className="title is-2" style={{ textAlign: "center" }}>{result.start}</h1>
+                <CFormInput
+                  required
+                  id="unixTimeStamp"
+                  className="input"
+                  value={firstSearch}
+                  onChange={(e) => setFirstSearch(e.target.value)}
+                  type="dateTime-local"
+                  label="Input Unix Time"
+                // placeholder="1674563128"
 
-                  <hr />
+                />
 
-                  {/* <div className="d-grid gap-2">
+                <hr />
+
+                {/* <div className="d-grid gap-2">
                     <CButton id="login" style={{ backgroundColor: '#6610F2', border: 'solid 2px #6610F2' }} type="submit">Convert Time</CButton>
                   </div> */}
               </CCard>

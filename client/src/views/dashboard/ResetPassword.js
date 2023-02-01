@@ -17,7 +17,7 @@ import {
 } from '@coreui/react'
 
 const ResetPassword = () => {
-const language = ("eng")
+  const language = ("eng")
 
   const [idVendor, setIdVendor] = useState('')
   const [codUser, setCodUser] = useState('')
@@ -41,13 +41,34 @@ const language = ("eng")
 
 
 
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault()
+  //   const formData = new FormData();
+  //   formData.append("idVendor", idVendor);
+  //   formData.append("codUser", codUser);
+  //   formData.append("codLanguage", codLanguage);
+
+  //   try {
+  //     await axios.post('https://oucedsa-web.cwbyminsait.com:8254/venLogin/1.0.1/', formData,{
+  //       headers: {
+  //        " X-Incms-Origin-D": "100036#orngcld", 
+  //        "Authorization": "Bearer 61353cac-128f-37a2-a460-d7282614e44c"
+  //       },
+  //     })
+
   const handleSubmit = async (e) => {
     e.preventDefault()
+    // const formData = new FormData();
+    // formData.append("idVendor", idVendor);
+    // formData.append("codUser", codUser);
+    // formData.append("codLanguage", codLanguage);
     try {
-      await axios.post('https://oucedsa-web.cwbyminsait.com:8254/venLogin/1.0.1/', {
-        idVendor: idVendor,
-        codUser: codUser,
-        codLanguage: language,
+      await axios.post('https://oucedsa-am.cwbyminsait.com/token?grant_type=password&username=100036%23orngcld&password=orngcld123&scope=token_public token_private ststoken_public', {
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+          "Authorization": "Basic MklNRDdYME5QY1JGTEZoMWpjQ092MlRtakRJYTp3ODBDSmJpa3pQUEQ0TXZ1Q0VwZmV2ekN0WXNh",
+          "Accept-Encoding": "gzip, deflate, br"
+        },
       })
       navigate('/updatePassword')
     } catch (error) {
@@ -91,29 +112,28 @@ const language = ("eng")
                   <h1 className="title is-2" style={{ textAlign: 'center' }}>
                     Reset{' '}
                   </h1>
-                  <CFormInput
+                  {/* <CFormInput
                     required
                     className="input"
                     value={idVendor}
                     onChange={(e) => setIdVendor(e.target.value)}
                     label="Vendor Id"
-                  />
-                  <CFormInput
+                  /> */}
+                  {/* <CFormInput
                     required
                     className="input"
                     value={codUser}
                     label="User Cod"
                     onChange={(e) => setCodUser(e.target.value)}
-                  />
-                  <CFormInput
+                  /> */}
+                  {/* <CFormInput
                     required
                     disabled
                     className="input"
                     value={language}
                     onChange={(e) => setCodLanguage(e.target.value)}
-                
                     label="Cod Language"
-                  />
+                  /> */}
                   <hr />
                   <div className="d-grid gap-2">
                     <CButton

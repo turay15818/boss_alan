@@ -38,6 +38,14 @@ import pdfFonts from "pdfmake/build/vfs_fonts";
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 window.JSZip = jzip;
 
+
+
+
+const API_URL = "http://localhost:4433//venInfoVendor/1.0.1/";
+
+
+
+
 const Dashboard = () => {
 
   const dispatch = useDispatch();
@@ -78,6 +86,20 @@ const Dashboard = () => {
     );
   });
 
+  const [data, setData] = useState({});
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(API_URL);
+        setData(response.data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchData();
+  }, []);
+
+
 
 
   const [users, setUsers] = useState([]);
@@ -90,6 +112,7 @@ const Dashboard = () => {
     // const response = await axios.get("http://172.25.164.15:3333/users");
     const response = await axios.get("http://localhost:4433/users");
     setUsers(response.data);
+    console.log(response)
   };
 
   const deleteUser = async (userId) => {
@@ -101,11 +124,20 @@ const Dashboard = () => {
   const [visibleLg, setVisibleLg] = useState(false)
 
 
+  const [vendor, setVendor] = useState({});
+  useEffect(() => {
+    fetch("http://localhost:4433//venInfoVendor/1.0.1/")
+      .then((response) => response.json())
+      .then((json) => setVendor(json.data));
+  }, []);
 
 
   return (
     <>
-
+      <div>
+        <h1>API Data:</h1>
+        <pre>{JSON.stringify(data, null, 2)}</pre>
+      </div>
       <CRow>
         <CCol xs={12}>
 
@@ -117,13 +149,12 @@ const Dashboard = () => {
                     <CModalTitle>Add User</CModalTitle>
                   </CModalHeader>
                   <CModalBody>
-
-                    {/* <AddUser /> */}
-
                   </CModalBody>
-
                 </CModal></>
             )}
+
+
+
             {user && user.role === 'admin' && (
               <CCol xs={12}>
                 <CCard className="mb-4">
@@ -190,8 +221,46 @@ const Dashboard = () => {
                   </CCardBody>
                 </CCard>
               </CCol>
-
             )}
+
+            {user && user.role === 'admin' && (
+              <CCol xs={12}>
+                <CCard className="mb-4">
+                  <CCardHeader>
+                    <strong>Users Table</strong>
+                  </CCardHeader>
+                  <CCardBody>
+                    <table className="table is-striped is-fullwidth" id="userlist">
+                      <thead>
+                        <tr>
+                          <th>No</th>
+                          <th>Vendor Balance</th>
+                          <th>Desc Vendor</th>
+                          <th>Vendor Id</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+
+
+                        {users.map((user, index) => (
+                          <tr key={user.uuid}>
+                            <td>{index + 1}</td>
+                            <td>{vendor.idVendor}</td>
+                            <td>{vendor.descVendor}</td>
+                            <td>{vendor.balance}</td>
+                            
+
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </CCardBody>
+                </CCard>
+              </CCol>
+            )}
+
+
+
           </CRow>
 
         </CCol>

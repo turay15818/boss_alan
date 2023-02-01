@@ -3,6 +3,8 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import {
   CButton,
+  CCardBody,
+  CCardHeader,
   CCard,
   CCardGroup,
   CCol,
@@ -71,8 +73,66 @@ const DataTable = () => {
 
 
 
+  const [users, setUsers] = useState([]);
+
+  useEffect(() => {
+    getUsers();
+  }, []);
+
+  const getUsers = async () => {
+    // const response = await axios.get("http://172.25.164.15:3333/users");
+    const response = await axios.get("http://localhost:4433/users");
+    setUsers(response.data);
+    console.log(response)
+  };
+
+
+
+  const [vendor, setVendor] = useState({});
+  useEffect(() => {
+    fetch("http://localhost:4433/musaaa")
+      .then((response) => response.json())
+      .then((json) => setVendor(json.data));
+  }, []);
+
+
+
+  const [dataa, setDataa] = useState([]);
+
+  useEffect(() => {
+    fetch("http://localhost:4433/venCustomerEnquiries")
+      .then(response => response.json())
+      .then(dataa => setDataa(dataa.data))
+      .catch(error => console.error(error));
+  }, []);
+
   return (
     <div>
+
+
+{/* <div>
+      {dataa.map(item => (
+        <div key={item.transactionId}>
+          <p>Unit Payment: {item.unitPayment}</p>
+          <p>Name Cashier: {item.nameCashier}</p>
+          <p>Debt Payment: {item.debtPayment}</p>
+          <p>Customer Name: {item.customerName}</p>
+          <p>Date Transaction: {item.dateTransaction}</p>
+          <p>Transaction ID: {item.transactionId}</p>
+          <p>Unit Type: {item.unitType}</p>
+          <p>Total Amount: {item.totalAmount}</p>
+          <p>Unit: {item.unit}</p>
+          <p>Receipt: {item.receipt}</p>
+          <p>Meter Serial: {item.meterSerial}</p>
+          <p>Account: {item.account}</p>
+          <p>Code User: {item.codUser}</p>
+        </div>
+      ))}
+    </div>
+ */}
+
+
+
       <CContainer >
         <CRow className="justify-content-center">
           <CCol md={4}>
@@ -101,12 +161,64 @@ const DataTable = () => {
 
                 <hr />
 
-                {/* <div className="d-grid gap-2">
-                    <CButton id="login" style={{ backgroundColor: '#6610F2', border: 'solid 2px #6610F2' }} type="submit">Convert Time</CButton>
-                  </div> */}
               </CCard>
             </CCardGroup>
           </CCol>
+
+
+
+          <CCol xs={12}>
+            <CCard className="mb-4">
+              <CCardHeader>
+                <strong>Users Table</strong>
+              </CCardHeader>
+              <CCardBody>
+                <table className="table is-striped is-fullwidth" id="userlist">
+      <thead>
+        <tr>
+          <th>No</th>
+          <th>Transaction Id</th>
+          <th>Meter Serial</th>
+          <th>customer Name</th>
+          <th>Total Amount</th>
+          <th>Transaction Date</th>
+          <th>Account</th>
+          <th>Unit</th>
+          <th>Unit Payment</th>
+          <th>Unit Type</th>
+          <th>Receipt</th>
+          <th>Debt Payment</th>
+
+        </tr>
+      </thead>
+      <tbody>
+        {dataa.map((item, index) => (
+          <tr key={item.transactionId}>
+            <td>{index +1}</td>
+            <td>{item.transactionId}</td>
+            <td>{item.meterSerial}</td>
+            <td>{item.customerName}</td>
+            <td>{item.totalAmount}</td>
+            <td>{item.dateTransaction}</td>
+            <td>{item.account}</td>
+            <td>{item.unit}</td>
+            <td>{item.unitPayment}</td>
+            <td>{item.unitType}</td>
+            <td>{item.receipt}</td>
+            <td>{item.debtPayment}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+              </CCardBody>
+            </CCard>
+          </CCol>
+
+
+
+
+
+
         </CRow>
       </CContainer>
 
@@ -128,3 +240,15 @@ export default DataTable;
   //     <p>ISO Time: {isoTime}</p>
   //     <p>Normal Time: {normalTime.toLocaleString()}</p>
   //   </div>
+
+
+
+
+
+
+
+
+
+
+
+

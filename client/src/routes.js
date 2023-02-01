@@ -1,6 +1,7 @@
 /* eslint-disable prettier/prettier */
 import React from 'react'
 const Dashboard = React.lazy(() => import('./views/dashboard/Dashboard'))
+const DropDown = React.lazy(() => import('./views/dashboard/DropDown'))
 // const UpdateAdminLoginPassword = React.lazy(() => import('./views/dashboard/UpdateAdminLoginPassword'))
 const unixTimeStamp = React.lazy(() => import('./views/dashboard/unixTimeStamp'))
 const TableSearch = React.lazy(() => import('./views/dashboard/TableSearch'))
@@ -20,6 +21,7 @@ const UpdatePassword = React.lazy(() => import('./views/dashboard/UpdatePassword
 const routes = [
   { path: '/', exact: true, name: 'Home' },
   { path: '/dashboard', name: 'Dashboard', element: Dashboard },
+  { path: '/dropdown', name: 'Dropdown', element: DropDown },
   // { path: '/UpdateAdminLoginPassword/:token', name: 'Update Password', element: UpdateAdminLoginPassword },
   { path: '/unixTimeStamp', name: 'Unix Time Stamp', element: unixTimeStamp },
   { path: '/vendorInformation', name: 'Vendor Information', element: VendorInformation },
@@ -28,7 +30,7 @@ const routes = [
   { path: '/tableRangeSearch', name: 'Customer Enquiries', element: TableRangeSearch },
   { path: '/updatePassword', name: 'Dashboard', element: UpdatePassword },
   // { path: '/base/userList', name: 'User List', element: UserList },
-  { path: '/resetPassword', name: 'Reset Password', element: ResetPassword },
+  { path: '/resetPasswordDd', name: 'Reset Password', element: ResetPassword },
 
 ]
 

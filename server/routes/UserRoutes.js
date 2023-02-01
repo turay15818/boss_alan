@@ -1,4 +1,6 @@
 import express from "express";
+import request from 'request-promise';
+import cors from "cors"
 import {
   getUsers,
   getUserById,
@@ -12,14 +14,20 @@ import { resetPasswordToken, forgotPassword } from '../controller/ResetPasswordC
 // import { sendEmail } from "../controller/PasswordControllers";
 import { verifyUser, adminOnly } from "../middleware/AuthUsers.js";
 import moment from "moment";
-const router = express.Router();
+// import { musa } from "../controller/ExternalAPI.js";
 
+
+
+const router = express.Router();
 
 
 
 // send password link
 // router.post('/sendpasswordlink', sendEmailLink);
 // import { resetPasswordToken, forgotPassword } from '../controller/ResetPasswordController.js'
+// router.post('/musa', musa)
+
+
 router.post('/forgotPassword', forgotPassword)
 router.post('/reset-password/:token', resetPasswordToken)
 

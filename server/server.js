@@ -8,8 +8,7 @@ import SequelizeStore from "connect-session-sequelize";
 import UserRoute from './routes/UserRoutes.js'
 import bodyParser from "body-parser";
 import AuthRoute from "./routes/AuthRoute.js";
-import moment from "moment"
-
+import ExternalAPIRoute from "./routes/ExtternalAPIRoute.js"
 
 dotenv.config();
 const app = express();
@@ -54,14 +53,21 @@ app.use(session({
 app.use(cors({
     credentials: true,
     // origin: 'http://172.25.164.15:3000',
-    origin: 'http://localhost:4434',
+    origin: ['http://localhost:4434', 'https://oucedsa-am.cwbyminsait.com']
+    // origin: 'https://oucedsa-am.cwbyminsait.com',
 }));
+
+app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', req.headers.origin);
+    res.header('Access-Control-Allow-Credentials', true);
+    next();
+});
 
 app.use(express.static("public"));
 app.use(express.json())
 app.use(UserRoute);
 app.use(AuthRoute)
-
+app.use(ExternalAPIRoute)
 
 
 // app.post('/convert', (req, res) => {

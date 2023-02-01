@@ -1,7 +1,8 @@
 {
   "name": "frontend",
+  "proxy": "https://oucedsa-am.cwbyminsait.com",
   "version": "4.4.0",
-  "description": "SMC Complain App",
+  "description": "",
   "homepage": ".",
   "bugs": {
     "url": "https://github.com/turay15818/ComplainApp.git"
