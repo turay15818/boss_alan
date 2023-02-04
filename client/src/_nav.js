@@ -32,14 +32,14 @@ const _nav = [
   {
     component: CNavItem,
     name: 'Customer Enquiries',
-    to: '/tableRangeSearch',
+    to: '/tableRangeSearch/',
     icon: <CIcon icon={cilSearch} customClassName="nav-icon" />,
   },
 
   {
     component: CNavItem,
     name: 'Check STS Token',
-    to: '/stsToken',
+    to: '/stsTokenDisplay',
     icon: <CIcon icon={cilCheck} customClassName="nav-icon" />,
   },
   {

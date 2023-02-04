@@ -26,6 +26,7 @@ import {
 } from '@coreui/react'
 import pdfMake from "pdfmake/build/pdfmake";
 import pdfFonts from "pdfmake/build/vfs_fonts";
+import { useSelector } from 'react-redux'
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 window.JSZip = jzip;
 
@@ -51,6 +52,7 @@ const TableSearch = () => {
   });
 
 
+  const { user } = useSelector((state) => state.auth);
 
 
 
@@ -73,38 +75,119 @@ const TableSearch = () => {
 
   const [firstSearch, setFirstSearch] = useState('');
   const [result, setResult] = useState({});
-
   useEffect(() => {
     async function convert() {
       const res = await fetch(`http://localhost:4433/convertSingle?start=${firstSearch}`);
       const data = await res.json();
       setResult(data);
     }
-
     if (firstSearch) {
       convert();
     }
   }, [firstSearch]);
 
 
+  const [users, setUsers] = useState([]);
+
+  useEffect(() => {
+    getUsers();
+  }, []);
+
+  const getUsers = async () => {
+    // const response = await axios.get("http://172.25.164.15:3333/users");
+    const response = await axios.get("http://localhost:4433/users");
+    setUsers(response.data);
+    console.log(response)
+  };
+
+
+
+
+
+  const [dataPost, setDataPost] = useState([]);
+  useEffect(() => {
+    const options = {
+      uri: "http://localhost:4433/generateToken",
+      method: 'POST',
+    };
+    fetch(options.uri, {
+      method: options.method,
+    })
+      .then(res => res.json())
+      .then(response => {
+        setDataPost(response);
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  }, []);
+
+
+
+  const turay = (dataPost.access_token)
+  console.log(turay)
+  
+  // const [musa, setMusa] = useState(`${turay}`);
   const [vendor, setVendor] = useState({});
   useEffect(() => {
-    fetch("http://localhost:4433//venInfoVendor/1.0.1/")
-      .then((response) => response.json())
-      .then((json) => setVendor(json.data));
-  }, []);
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(
+          "http://localhost:4433/venInfoVendor/1.0.1/",
+          {
+            headers: {
+              musa:  turay,
+            },
+          }
+        );
+        setVendor(response.data.data);
+        console.log(response)
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchData();
+  }, [turay]);
+
+
+
+
+
+
 
 
   return (
     <div>
+              <CCol xs={12}>
+                <CCard className="mb-4">
+                  <CCardHeader>
+                    <h4>Ven Shift Enquiry</h4>
+                  </CCardHeader>
+                  <CCardBody>
+                    <table className="table is-striped is-fullwidth" id="userlist">
+                      <thead>
+                        <tr>
+                          <th>No</th>
+                          <th>Vendor Balance</th>
+                          <th>Desc Vendor</th>
+                          <th>Vendor Id</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {users.map((user, index) => (
+                          <tr key={user.uuid}>
+                            <td>{index + 1}</td>
+                            <td>{vendor.idVendor}</td>
+                            <td>{vendor.descVendor}</td>
+                            <td>{vendor.balance}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </CCardBody>
+                </CCard>
+              </CCol>
 
-
-
-      <div>
-        <p>balance: {vendor.balance}</p>
-        <p>descVendor: {vendor.descVendor}</p>
-        <p>idVendor: {vendor.idVendor}</p>
-      </div>
 
 
 
@@ -125,15 +208,8 @@ const TableSearch = () => {
                   onChange={(e) => setFirstSearch(e.target.value)}
                   type="dateTime-local"
                   label="Input Unix Time"
-                // placeholder="1674563128"
-
                 />
-
                 <hr />
-
-                {/* <div className="d-grid gap-2">
-                    <CButton id="login" style={{ backgroundColor: '#6610F2', border: 'solid 2px #6610F2' }} type="submit">Convert Time</CButton>
-                  </div> */}
               </CCard>
             </CCardGroup>
           </CCol>
